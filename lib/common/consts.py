@@ -27,8 +27,8 @@ sprint_team_score = 24  # 每个月从项目得到的评价分
 
 # 贡献分数计算范围
 # 范围越大越能体现贡献和价值，但对团队协作和团结可能产生负面影响
-# 范围越小越和谐，吃大锅饭，但会降低对积极工作的成员的正向反馈，打击工作积极性
-base_contribution_score = 10  # 团队基础贡献值分数，什么事都不干的基线分
+# 范围越小越和谐，吃大锅饭，但会降低对积极工作同学的正向反馈，打击工作积极性
+base_contribution_score = 50  # 团队基础贡献值分数，什么事都不干的基线分
 max_contribution_score = 100  # 团队最大贡献值分数
 
 member_names = [
@@ -47,14 +47,14 @@ member_names = [
 # MP 估算人月投入占比
 special_contribution_points = {
     "代码评审(PORTAL/COBI)": 10,
-    "代码评审(GI/CMDB)": 10,
+    "代码评审(GI/CMDB)": 15,
     "用例评审(ROBOT/MANUAL)": 20,
     "QA": 30,
-    "CM": 10,
+    "CM": 5,
     "BA(PORTAL/COBI)": 20,
     "BA(GI/CMDB)": 10,
     "防火墙:(PORTAL/COBI)": 30,
-    "防火墙:(GI/CMDB)": 30,
+    "防火墙:(GI/CMDB)": 40,
     "PTL/SM": 70  # 多少合适？？？能够有30%的开发投入？？？
 }
 
