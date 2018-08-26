@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.page_title }}</title>
+    {{ echarts_js_dependencies(page) }}
+    <style>
+    body {
+        text-align: center;
+    }
+    div[_echarts_instance_] {
+        display: inline-block;
+    }
+    </style>
+</head>
+<body>
+    {% for chart in page %}
+        {{ echarts_container(chart) }}
+    {% endfor %}
+    {{ echarts_js_content(*page) }}
+</body>
+</html>

@@ -6,17 +6,15 @@ from ..common import envs, jira, utils
 
 
 def render(page):
-    # pip install jupyter-echarts-pypkg==0.1.1 解决Y坐标不正确的问题
-    bar = Bar("角色工作占比贡献补偿(%)")
-    attr = envs.member_names
+    bar = Bar("特殊工作占比贡献补偿(%)")
     for special in envs.special_contribution_points:
         series = []
-        for member in envs.member_names:
+        special_point = envs.special_contribution_points[special]
+        for name in envs.member_names:
             point = 0
-            if member in envs.special_contribution:
-                if special in envs.special_contribution[member]:
-                    point = envs.special_contribution_points[special]
+            if name in envs.special_contribution and special in envs.special_contribution[name]:
+                point = special_point
             series.append(point)
-        bar.add(special, attr, series, is_stack=True,
+        bar.add(special, envs.member_names, series, is_stack=True,
                 yaxis_max=100, is_legend_show=False)
     page.add(bar)

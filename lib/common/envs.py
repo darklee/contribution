@@ -1,6 +1,8 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
+
+# 青木团队迭代贡献计算
 """ 
 特殊贡献值主要为角色贡献，按每月预估工作占比进行估算，设定值为百分比
 故事按估算的故事点进行贡献值计算

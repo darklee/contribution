@@ -37,7 +37,7 @@ def render(page):
         contribution_series_special.append(calc_contribution_serie(
             member["contribution"]["special"], max_contribution_point))
 
-    radar = Radar('贡献值得分均衡情况')
+    radar = Radar('贡献值均衡情况(得分)')
     radar.config(schema)
     radar.add("特别贡献值", [contribution_series_special],
               is_area_show=True, area_opacity=0.3)

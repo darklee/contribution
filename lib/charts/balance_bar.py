@@ -7,8 +7,9 @@ from collections import OrderedDict
 
 
 def render(page):
+    # pip install jupyter-echarts-pypkg==0.1.1 解决is_convert后Y坐标名称不正确的问题
     members = jira.members_contribution
-    bar = Bar("贡献值均衡详情")
+    bar = Bar("贡献值均衡详情(点数)")
     attr = envs.member_names
     contribution_types_dict = OrderedDict(envs.special_contribution_points)
     reduce(lambda result, next: contribution_types_dict.update(next), map(
