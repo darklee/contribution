@@ -25,6 +25,18 @@ def get_members_contribution():
                 map(lambda e: e[1], filter(lambda e: e[0] in envs.special_contribution_points, member["contribution-list"].items())))  # 特殊角色补偿贡献值
         }
         members[who] = member
+
+    all_contribution_points = []
+    for m in members.values():
+        all_contribution_points.append(m["contribution"]["total"])
+    max_contribution_point = max(all_contribution_points)
+    for who in members:
+        member = members[who]
+        member["contribution-score"] = {
+            "total": utils.calc_contribution_score(member["contribution"]["total"], max_contribution_point),
+            "special": utils.calc_contribution_score(member["contribution"]["special"], max_contribution_point)
+        }
+
     print json.dumps(members, indent=2, ensure_ascii=False)
     return members
 
