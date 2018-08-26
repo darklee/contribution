@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
-from ..common import consts, jira, utils
+from ..common import envs, jira, utils
 from pyecharts import Radar
 import json
 import re
@@ -12,7 +12,7 @@ from collections import OrderedDict
 # real_contribution_point 是某个成员迭代中的贡献值
 # max_point 是所有成员当前迭代贡献值中取最大
 def calc_contribution_serie(real_contribution_point, max_point):
-    serie = consts.base_contribution_score + (consts.max_contribution_score - consts.base_contribution_score) * \
+    serie = envs.base_contribution_score + (envs.max_contribution_score - envs.base_contribution_score) * \
         (real_contribution_point / float(max_point))
     return round(serie)
 
@@ -31,7 +31,7 @@ def render(page):
 
     for who in members:
         member = members[who]
-        schema.append((member["name"], consts.max_contribution_score))
+        schema.append((member["name"], envs.max_contribution_score))
         contribution_series_total.append(calc_contribution_serie(
             member["contribution"]["total"], max_contribution_point))
         contribution_series_special.append(calc_contribution_serie(
