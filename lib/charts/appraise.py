@@ -21,11 +21,12 @@ def render_a(page):
     bar = Bar("评价可分配分数(A)")
     names = names + ['PTL保留']
     appraise_score = appraise_score + \
-        [envs.sprint_appraise_score_total - sum(appraise_score)]
+        [float('%.2f' % (envs.sprint_appraise_score_total - sum(appraise_score)))]
     bar.add("分数", names, appraise_score,
             is_legend_show=False, is_convert=True)
 
     page.add(bar)
+
 
 def render_b(page):
     members = jira.members_contribution
@@ -42,7 +43,7 @@ def render_b(page):
     bar = Bar("评价可分配分数(B)")
     names = names + ['PTL保留']
     appraise_score = other_appraise_score + \
-        [envs.sprint_appraise_score_total - sum(other_appraise_score)]
+        [float('%.2f' % (envs.sprint_appraise_score_total - sum(other_appraise_score)))]
     bar.add("分数", names, appraise_score,
             is_legend_show=False, is_convert=True)
 

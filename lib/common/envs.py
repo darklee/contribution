@@ -76,7 +76,8 @@ special_contribution_points = {
     "防火墙:(PORTAL/COBI)": 30,
     "防火墙:(GI/CMDB)": 40,
     "新员工指导": 10,
-    "PTL/SM": 70  # 多少合适？？？能够有30%的开发投入？？？
+    "PTL": 40,  # 多少合适？？？能够有30%的开发投入？？？
+    "SM": 30  # 多少合适？？？能够有30%的开发投入？？？
 }
 
 # 每个相关的issue计算对应的贡献值(SP*N)
@@ -89,14 +90,19 @@ issue_contribution_points = {
 
 special_contribution = {
     "何敬":  ["CM"],
-    "梅瑜":  ["BA(PORTAL/COBI)", "代码评审(PORTAL/COBI)", "防火墙:(PORTAL/COBI)"],
+    "梅瑜":  ["BA(PORTAL/COBI)", "代码评审(PORTAL/COBI)", "防火墙:(PORTAL/COBI)", "SM"],
     "付繁虎":  ["BA(GI/CMDB)", "代码评审(GI/CMDB)", "新员工指导"],
     "刘芙蓉":  ["QA", "用例评审(ROBOT/MANUAL)", "新员工指导"],
-    "黎明":  ["PTL/SM"]
+    "黎明":  ["PTL"]
 }
 
 # 每个人保留0.5分用于最后调整分配
-sprint_appraise_score = sprint_appraise_score_total - len(appraise_members) * 0.5
+sprint_appraise_score = sprint_appraise_score_total - \
+    len(appraise_members) * 0.5
+sprint_appraise_other_score_total = sprint_appraise_score_total / \
+    len(appraise_members) * len(appraise_other_members)
+sprint_appraise_other_score = sprint_appraise_other_score_total - \
+    len(appraise_other_members) * 0.5
 # 贡献值计算调整区
 # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 

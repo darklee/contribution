@@ -30,9 +30,5 @@ def calc_appraise_scores(contribution_scores):
 
 def calc_appraise_other_scores(contribution_scores):
     sum_contribution_score = sum(contribution_scores)
-    sprint_appraise_other_score_total = envs.sprint_appraise_score_total / \
-        len(envs.appraise_members) * len(envs.appraise_other_members)
-    sprint_appraise_other_score = sprint_appraise_other_score_total - \
-        len(envs.appraise_other_members) * 0.5
-    factor = sprint_appraise_other_score / sum_contribution_score
+    factor = envs.sprint_appraise_other_score / sum_contribution_score
     return map(lambda score: float('%.1f' % (score * factor)), contribution_scores)
