@@ -29,6 +29,20 @@ sprint_appraise_score_total = float(32)  # 每个月从项目得到的评价分
 
 
 # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+# JIRA Excel 字段定义，JIRA Excel导出后根据文件调整如下字段
+jira_issue_key = "Issue Key"
+jira_issue_story_point = "故事点"
+jira_issue_type = "任务类型"
+jira_issue_assigner = "处理人"
+jira_issue_reporter = "报告人"
+jira_issue_verifier = "验证人"
+jira_issue_type_bug = "BUG"
+jira_issue_type_story = "STORY"
+# JIRA Excel 字段定义
+# ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+# ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 # 贡献值计算调整区
 
 # 贡献分数计算范围
@@ -103,18 +117,4 @@ sprint_appraise_other_score_total = sprint_appraise_score_total / \
 sprint_appraise_other_score = sprint_appraise_other_score_total - \
     len(appraise_other_members) * 0.5
 # 贡献值计算调整区
-# ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-
-
-# ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-# JIRA Excel 字段定义
-jira_issue_key = "Issue Key"
-jira_issue_story_point = "故事点"
-jira_issue_type = "任务类型"
-jira_issue_assigner = "处理人"
-jira_issue_reporter = "报告人"
-jira_issue_verifier = "验证人"
-jira_issue_type_bug = "BUG"
-jira_issue_type_story = "故事"
-# JIRA Excel 字段定义
 # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
