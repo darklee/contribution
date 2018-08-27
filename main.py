@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from pyecharts import Page
 import os
-from lib.common import jira
-from lib.charts import balance_radar, balance_bar, special, special_vacancy, appraise
+from src.common import jira
+from src.charts import balance_radar, balance_bar, special, special_vacancy, appraise
 
 
 def main():

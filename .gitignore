@@ -1,2 +1,7 @@
 target
 *.pyc
+pip-selfcheck.json
+/Include
+/Lib
+/Scripts
+/tcl
