@@ -52,31 +52,32 @@ def calc_contribution(who):
 # 计算成员的迭代贡献值
 def calc_issue_contribution(who):
     contribution = OrderedDict()
+    done_jira_issues = filter(lambda row: row[envs.jira_issue_status] == 'Done', jira_issues)
     # 非BUG全部按估算故事点数进行计算
-    whos_jira_issues = filter(
-        lambda row: utils.is_jira_user(row[envs.jira_issue_assigner], who), jira_issues)
+    assignee_jira_issues = filter(
+        lambda row: utils.is_jira_user(row[envs.jira_issue_assigner], who), done_jira_issues)
 
-    story_points = sum(map(lambda row: row[envs.jira_issue_story_point], filter(
-        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_story, whos_jira_issues)))
+    story_points = sum(map(lambda row: utils.parse_point(row[envs.jira_issue_story_point]), filter(
+        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_story, assignee_jira_issues)))
     contribution['故事'] = story_points
 
-    task_points = sum(map(lambda row: row[envs.jira_issue_story_point], filter(
-        lambda row: row[envs.jira_issue_type] not in (envs.jira_issue_type_bug, envs.jira_issue_type_story), whos_jira_issues)))
+    task_points = sum(map(lambda row: utils.parse_point(row[envs.jira_issue_story_point]), filter(
+        lambda row: row[envs.jira_issue_type] not in (envs.jira_issue_type_bug, envs.jira_issue_type_story), assignee_jira_issues)))
     contribution['任务'] = task_points
 
     # BUG如果有估算的按估算，无估算的按默认issue_contribution_points['故障修复']点
-    bug_points = sum(map(lambda row: row[envs.jira_issue_story_point] if (type(row[envs.jira_issue_story_point]) in [int, float] and row[envs.jira_issue_story_point] > 0) else envs.issue_contribution_points['故障修复'], filter(
-        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_bug, whos_jira_issues)))
+    bug_points = sum(map(lambda row: utils.parse_point(row[envs.jira_issue_story_point]) if utils.parse_point(row[envs.jira_issue_story_point]) > 0 else envs.issue_contribution_points['故障修复'], filter(
+        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_bug, assignee_jira_issues)))
     contribution['故障处理'] = bug_points
 
     # 报告BUG的点数
     report_bug_points = sum(map(lambda row: envs.issue_contribution_points['故障提交'], filter(
-        lambda row: utils.is_jira_user(row[envs.jira_issue_reporter], who), jira_issues)))
+        lambda row: utils.is_jira_user(row[envs.jira_issue_reporter], who) and row[envs.jira_issue_type] == envs.jira_issue_type_bug, done_jira_issues)))
     contribution['故障提交'] = report_bug_points
 
     # 验证BUG的点数
     verify_bug_points = sum(map(lambda row: envs.issue_contribution_points['故障验证'], filter(
-        lambda row: utils.is_jira_user(row[envs.jira_issue_verifier], who), jira_issues)))
+        lambda row: utils.is_jira_user(row[envs.jira_issue_verifier], who) and row[envs.jira_issue_type] == envs.jira_issue_type_bug, done_jira_issues)))
     contribution['故障验证'] = verify_bug_points
 
     return contribution
@@ -97,11 +98,15 @@ def read_jira_excel(filepath=envs.jira_file):
     print 'Read excel: %s' % filepath
     workbook = xlrd.open_workbook(filepath)
     headers = []
-    sheet = workbook.sheet_by_name('Sheet1')
-    for row in sheet.get_rows():
+    sheet = workbook.sheet_by_name('general_report')
+    for idx, row in enumerate(sheet.get_rows()):
+        if idx < 3:
+            continue  # 忽略开头的几行无效数据
         if len(headers) == 0:
             for cell in row:
                 headers.append(cell.value)
+            if headers[0] != 'Project':
+                raise ValueError('Unexcepted jira excel header start')
         else:
             data = OrderedDict()
             for idx, cell in enumerate(row):

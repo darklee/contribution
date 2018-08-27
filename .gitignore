@@ -5,3 +5,4 @@ pip-selfcheck.json
 /Lib
 /Scripts
 /tcl
+.vscode

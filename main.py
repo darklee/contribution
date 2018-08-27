@@ -2,13 +2,15 @@
 from __future__ import unicode_literals
 
 from pyecharts import Page
-import os
+import os, sys
 from src.common import jira
 from src.charts import balance_radar, balance_bar, special, special_vacancy, appraise
 
 
 def main():
-    os.chdir(os.path.dirname(__file__))
+    dirname = os.path.dirname(__file__)
+    if dirname != '':
+        os.chdir(dirname)
     page = Page("团队迭代情况")
     special.render(page)
     special_vacancy.render(page)
@@ -16,7 +18,7 @@ def main():
     balance_bar.render(page)
     appraise.render(page)
     page.render('target/page.html',
-                template_name="lib/templates/simple_page.html")
+                template_name="src/templates/simple_page.html")
 
 
 main()

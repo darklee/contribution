@@ -20,7 +20,7 @@ import os
 
 # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 # 迭代冲刺调整区
-jira_file = '%s/../../target/jira.xlsx' % os.path.dirname(__file__)
+jira_file = '%s/../../target/ZTE JIRA.xlsx' % os.path.dirname(__file__)
 
 sprint_invest = 20  # 月平均投入按20人天估算，用于做特殊贡献值补偿计算
 sprint_appraise_score_total = float(32)  # 每个月从项目得到的评价分
@@ -30,14 +30,15 @@ sprint_appraise_score_total = float(32)  # 每个月从项目得到的评价分
 
 # ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 # JIRA Excel 字段定义，JIRA Excel导出后根据文件调整如下字段
-jira_issue_key = "Issue Key"
-jira_issue_story_point = "故事点"
-jira_issue_type = "任务类型"
-jira_issue_assigner = "处理人"
-jira_issue_reporter = "报告人"
+jira_issue_key = "Key"
+jira_issue_story_point = "Story Points"
+jira_issue_type = "Issue Type"
+jira_issue_assigner = "Assignee"
+jira_issue_reporter = "Reporter"
+jira_issue_status = "Status"
 jira_issue_verifier = "验证人"
-jira_issue_type_bug = "BUG"
-jira_issue_type_story = "STORY"
+jira_issue_type_bug = "Bug"
+jira_issue_type_story = "故事"
 # JIRA Excel 字段定义
 # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
@@ -54,7 +55,7 @@ max_contribution_score = 100  # 团队最大贡献值分数
 member_names = [
     "黎明",
     "何敬",
-    "梅瑜",
+    "梅渝",
     "付繁虎",
     "陈秋曲",
     "刘芙蓉",
@@ -65,7 +66,7 @@ member_names = [
 
 appraise_members = [
     "何敬",
-    "梅瑜",
+    "梅渝",
     "付繁虎",
     "陈秋曲"
 ]
@@ -87,8 +88,8 @@ special_contribution_points = {
     "CM": 5,
     "BA(PORTAL/COBI)": 20,
     "BA(GI/CMDB)": 10,
-    "防火墙:(PORTAL/COBI)": 30,
-    "防火墙:(GI/CMDB)": 40,
+    "防火墙:(PORTAL/COBI)": 20,
+    "防火墙:(GI/CMDB)": 30,
     "新员工指导": 10,
     "PTL/SM": 70  # 多少合适？？？能够有30%的开发投入？？？
 }
@@ -103,7 +104,7 @@ issue_contribution_points = {
 
 special_contribution = {
     "何敬":  ["CM"],
-    "梅瑜":  ["BA(PORTAL/COBI)", "代码评审(PORTAL/COBI)", "防火墙:(PORTAL/COBI)"],
+    "梅渝":  ["BA(PORTAL/COBI)", "代码评审(PORTAL/COBI)"],
     "付繁虎":  ["BA(GI/CMDB)", "代码评审(GI/CMDB)", "新员工指导"],
     "刘芙蓉":  ["QA", "用例评审(ROBOT/MANUAL)", "新员工指导"],
     "黎明":  ["PTL/SM"]
