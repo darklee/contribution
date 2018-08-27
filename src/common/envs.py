@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 # 青木团队迭代贡献计算
 """ 
 特殊贡献值主要为角色贡献，按每月预估工作占比进行估算，设定值为百分比
-故事按估算的故事点进行贡献值计算
+故事按估算的故事点进行贡献值计算，没有完成的按当前进度进行换算，下个迭代计划会直接扣除对应故事点
 故障有故事点的按故事点进行计算，没有的按对应issue_contribution_points进行计算
 故障验证和提交故障按对应issue_contribution_points的贡献值进行计算
 贡献点数根据故事点和特殊贡献补偿合并计算获得
@@ -39,6 +39,7 @@ jira_issue_status = "Status"
 jira_issue_verifier = "验证人"
 jira_issue_type_bug = "Bug"
 jira_issue_type_story = "故事"
+jira_issue_progress = "Σ Progress"
 # JIRA Excel 字段定义
 # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 

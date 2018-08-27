@@ -12,7 +12,7 @@ def is_jira_user(jira_user, who):
     return re.match(jira_user_pattern, jira_user) != None
 
 
-def parse_point(cellvalue):
+def parse_float(cellvalue):
     point = 0
     try:
         point = float(cellvalue)
@@ -44,4 +44,4 @@ def calc_appraise_other_scores(contribution_scores):
 
 
 if __name__ == '__main__':
-    print parse_point("1.0")
+    print parse_float("20%".replace("%",""))

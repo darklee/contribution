@@ -52,22 +52,32 @@ def calc_contribution(who):
 # 计算成员的迭代贡献值
 def calc_issue_contribution(who):
     contribution = OrderedDict()
-    done_jira_issues = filter(lambda row: row[envs.jira_issue_status] == 'Done', jira_issues)
-    # 非BUG全部按估算故事点数进行计算
-    assignee_jira_issues = filter(
+
+    done_jira_issues = filter(
+        lambda row: row[envs.jira_issue_status] == 'Done', jira_issues)
+    done_assignee_jira_issues = filter(
         lambda row: utils.is_jira_user(row[envs.jira_issue_assigner], who), done_jira_issues)
 
-    story_points = sum(map(lambda row: utils.parse_point(row[envs.jira_issue_story_point]), filter(
-        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_story, assignee_jira_issues)))
+    doing_jira_issues = filter(
+        lambda row: row[envs.jira_issue_status] not in ('Done', 'Cancelled'), jira_issues)
+    doing_assignee_jira_issues = filter(
+        lambda row: utils.is_jira_user(row[envs.jira_issue_assigner], who), doing_jira_issues)
+
+    doing_story_points = sum(map(lambda row: float('%.1f' % (utils.parse_float(row[envs.jira_issue_story_point]) * (0 if type(row[envs.jira_issue_progress]) != float else row[envs.jira_issue_progress]))), filter(
+        lambda row: row[envs.jira_issue_type] != envs.jira_issue_type_bug, doing_assignee_jira_issues)))
+    contribution['部份完成'] = doing_story_points
+
+    story_points = sum(map(lambda row: utils.parse_float(row[envs.jira_issue_story_point]), filter(
+        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_story, done_assignee_jira_issues)))
     contribution['故事'] = story_points
 
-    task_points = sum(map(lambda row: utils.parse_point(row[envs.jira_issue_story_point]), filter(
-        lambda row: row[envs.jira_issue_type] not in (envs.jira_issue_type_bug, envs.jira_issue_type_story), assignee_jira_issues)))
+    task_points = sum(map(lambda row: utils.parse_float(row[envs.jira_issue_story_point]), filter(
+        lambda row: row[envs.jira_issue_type] not in (envs.jira_issue_type_bug, envs.jira_issue_type_story), done_assignee_jira_issues)))
     contribution['任务'] = task_points
 
     # BUG如果有估算的按估算，无估算的按默认issue_contribution_points['故障修复']点
-    bug_points = sum(map(lambda row: utils.parse_point(row[envs.jira_issue_story_point]) if utils.parse_point(row[envs.jira_issue_story_point]) > 0 else envs.issue_contribution_points['故障修复'], filter(
-        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_bug, assignee_jira_issues)))
+    bug_points = sum(map(lambda row: utils.parse_float(row[envs.jira_issue_story_point]) if utils.parse_float(row[envs.jira_issue_story_point]) > 0 else envs.issue_contribution_points['故障修复'], filter(
+        lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_bug, done_assignee_jira_issues)))
     contribution['故障处理'] = bug_points
 
     # 报告BUG的点数
