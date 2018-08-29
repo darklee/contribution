@@ -13,6 +13,10 @@ from __future__ import unicode_literals
 评价分根据贡献分数对项目分进行分配获得
 每个人保留0.5分在最后PTL/SM进行分配，用以调整评价和抹平分数，或者某些特殊情况，如新员工
 PTL/SM的贡献值在计算考核分数占用时，不计算特殊贡献部份的分数？？？避免占用团队过多的分数资源，影响分数分配？？？
+
+1、各个特殊角色取值
+2、平衡范围用多少，A，B，C三种情况
+3、空缺角色的认领
 """
 
 import os
@@ -100,7 +104,7 @@ special_contribution_points = {
 issue_contribution_points = {
     "故障修复": 1,
     "故障验证": 0.5,
-    "故障提交": 0.5
+    "故障提交": 0.3
 }
 
 special_contribution = {

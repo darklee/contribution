@@ -65,30 +65,30 @@ def calc_issue_contribution(who):
 
     doing_story_points = sum(map(lambda row: float('%.1f' % (utils.parse_float(row[envs.jira_issue_story_point]) * (0 if type(row[envs.jira_issue_progress]) != float else row[envs.jira_issue_progress]))), filter(
         lambda row: row[envs.jira_issue_type] != envs.jira_issue_type_bug, doing_assignee_jira_issues)))
-    contribution['部份完成'] = doing_story_points
+    contribution['部份完成'] = float('%.1f' % doing_story_points)
 
     story_points = sum(map(lambda row: utils.parse_float(row[envs.jira_issue_story_point]), filter(
         lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_story, done_assignee_jira_issues)))
-    contribution['故事'] = story_points
+    contribution['故事'] = float('%.1f' % story_points)
 
     task_points = sum(map(lambda row: utils.parse_float(row[envs.jira_issue_story_point]), filter(
         lambda row: row[envs.jira_issue_type] not in (envs.jira_issue_type_bug, envs.jira_issue_type_story), done_assignee_jira_issues)))
-    contribution['任务'] = task_points
+    contribution['任务'] = float('%.1f' % task_points)
 
     # BUG如果有估算的按估算，无估算的按默认issue_contribution_points['故障修复']点
     bug_points = sum(map(lambda row: utils.parse_float(row[envs.jira_issue_story_point]) if utils.parse_float(row[envs.jira_issue_story_point]) > 0 else envs.issue_contribution_points['故障修复'], filter(
         lambda row: row[envs.jira_issue_type] == envs.jira_issue_type_bug, done_assignee_jira_issues)))
-    contribution['故障处理'] = bug_points
+    contribution['故障处理'] = float('%.1f' % bug_points)
 
     # 报告BUG的点数
     report_bug_points = sum(map(lambda row: envs.issue_contribution_points['故障提交'], filter(
         lambda row: utils.is_jira_user(row[envs.jira_issue_reporter], who) and row[envs.jira_issue_type] == envs.jira_issue_type_bug, done_jira_issues)))
-    contribution['故障提交'] = report_bug_points
+    contribution['故障提交'] = float('%.1f' % report_bug_points)
 
     # 验证BUG的点数
     verify_bug_points = sum(map(lambda row: envs.issue_contribution_points['故障验证'], filter(
         lambda row: utils.is_jira_user(row[envs.jira_issue_verifier], who) and row[envs.jira_issue_type] == envs.jira_issue_type_bug, done_jira_issues)))
-    contribution['故障验证'] = verify_bug_points
+    contribution['故障验证'] = float('%.1f' % verify_bug_points)
 
     return contribution
 
